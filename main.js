@@ -1,8 +1,9 @@
 console.log("Before");
 
-// Cosuming the callbacks 
+// Asynchronous 
 getUser(1, (user) => {
     getRepositories(user.userName, (repos) => {
+        // console.log(repos);  
         getCommits((commits) => {
             console.log(commits);
 
@@ -10,10 +11,16 @@ getUser(1, (user) => {
         })
     })
 })
-
 console.log("After");
 
-// Creating callbacks
+// Synchronous
+console.log("Before");
+const user = getUser(1);
+const repos = getRepositories(user.userName);
+const commits = getCommits(repos[0]);
+console.log("After");
+
+
 function getUser(id, callback) {
     setTimeout(() => {
         console.log('Getting user object...');
@@ -33,21 +40,13 @@ function getCommits(commits) {
 }
 
 
-
-
-
-
-
-
-
-
-
 /* 
 
 OUTPUT
     Before
     After
-    Reading user from database...
-    { id: 1, userName: 'redbull' 
+    Getting user object...
+    Getting repositories array...
+    GitHub commit
 
 */
