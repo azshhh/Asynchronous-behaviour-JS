@@ -1,24 +1,11 @@
-// Asynchronous approach
-// console.log("Before");
-// getUser(1, (user) => {
-//     getRepositories(user.userName, (repos) => {
-//         getCommits((commits) => {
-//             console.log(commits);
-//         })
-//     })
-// })
-// console.log("After");
+async function displayCommits() {
+    const user = await getUser(1);
+    const repos = await getRepositories(user.userName);
+    const commits = await getCommits(repos[0]);
+    console.log(commits);
+}
+displayCommits();
 
-// Promise approach
-console.log("Before");
-getUser(1)
-.then(user => getRepositories(user.userName))
-.then(repos => getCommits(repos[0]))
-.then(commits => console.log(commits))
-.catch(error => console.log(error.message));
-console.log("After");
-
-// getUser() returns a promise resolving user object, and to consume this object we use .then method
 function getUser(id) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -28,7 +15,6 @@ function getUser(id) {
     });
 }
 
-// getRepositories() returns a prmoise resolving an array of repos of that userName, and consumed
 function getRepositories(username) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -39,7 +25,7 @@ function getRepositories(username) {
 
 }
 
-// getCommits() returns a promise resolving an array of commit.
+
 function getCommits(repo) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -48,15 +34,3 @@ function getCommits(repo) {
     });
 
 }
-
-
-/* 
-
-OUTPUT
-    Before
-    After
-    Getting user object...
-    Getting repositories array...
-    [ 'GitHub commit' ]
-
-*/
